@@ -7,7 +7,7 @@ interface IngredientsChecklistProps {
   recipe: RecipePayload | null;
 }
 
-export default function IngredientsChecklist({ recipe }: IngredientsChecklistProps) {
+  export default function IngredientsChecklist({ recipe }: IngredientsChecklistProps) {
   if (!recipe) {
     return (
       <div className="flex h-40 items-center justify-center rounded-2xl border border-dashed border-muted-foreground/30 bg-muted/20 p-6 text-center text-sm text-muted-foreground">
@@ -16,7 +16,7 @@ export default function IngredientsChecklist({ recipe }: IngredientsChecklistPro
     );
   }
 
-  return (
+    return (
     <div className="rounded-2xl border border-border bg-card/50 p-6 shadow-sm">
       <h3 className="mb-4 flex items-center gap-2 text-lg font-semibold text-foreground">
         <CheckCircle2 className="h-5 w-5 text-primary" />

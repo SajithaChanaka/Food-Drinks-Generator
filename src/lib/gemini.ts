@@ -34,7 +34,6 @@ export async function fetchRecipeFromGemini(query: string): Promise<{
   const response = await result.response;
   const text = response.text();
 
-  // Strip markdown fences if present
   const cleaned = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
   return JSON.parse(cleaned);
 }

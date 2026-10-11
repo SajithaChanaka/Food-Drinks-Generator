@@ -15,7 +15,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleGenerate = useCallback(async (query: string) => {
+     const handleGenerate = useCallback(async (query: string) => {
     setLoading(true);
     setError(null);
     try {
@@ -25,13 +25,13 @@ export default function Home() {
         body: JSON.stringify({ query }),
       });
 
-      const contentType = res.headers.get('content-type');
+        const contentType = res.headers.get('content-type');
       if (!contentType || !contentType.includes('application/json')) {
         const text = await res.text();
         throw new Error(`Unexpected response (${res.status}): ${text.slice(0, 200)}`);
       }
 
-      const data = await res.json();
+         const data = await res.json();
 
       if (!res.ok) {
         throw new Error(data.error || `Request failed with status ${res.status}`);
@@ -54,16 +54,16 @@ export default function Home() {
     }
   }, []);
 
-  const handleSelectHistory = useCallback((item: RecipePayload) => {
+        const handleSelectHistory = useCallback((item: RecipePayload) => {
     setRecipe(item);
     setError(null);
-    // Scroll to top on mobile
+  
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const handleDismissError = useCallback(() => setError(null), []);
 
-  return (
+       return (
     <div className="flex min-h-screen bg-background">
       {/* Left Sidebar - Historical Tracking Panel */}
       <SidebarHistory onSelectRecipe={handleSelectHistory} selectedTitle={recipe?.title} />

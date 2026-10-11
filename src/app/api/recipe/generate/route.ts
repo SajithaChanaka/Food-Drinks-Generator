@@ -13,15 +13,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Query is required' }, { status: 400 });
     }
 
-    // Sanitize: allow letters, numbers, spaces, and common food characters
-    const sanitized = rawQuery.replace(/[^a-zA-Z0-9\s\-',.!()]/g, '').slice(0, 200);
+    
+     const sanitized = rawQuery.replace(/[^a-zA-Z0-9\s\-',.!()]/g, '').slice(0, 200);
 
     if (!sanitized) {
       return NextResponse.json({ error: 'Invalid query after sanitization' }, { status: 400 });
     }
 
-    // Cache hit: case-insensitive title search
-    const cached = await prisma.recipe.findFirst({
+   
+      const cached = await prisma.recipe.findFirst({
       where: {
         title: {
           equals: sanitized,
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    if (cached) {
+      if (cached) {
       return NextResponse.json({
         id: cached.id,
         title: cached.title,
@@ -52,8 +52,8 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Cache miss: concurrent API orchestration
-    const [geminiData, imageUri, youtubeVideoId] = await Promise.all([
+    
+      const [geminiData, imageUri, youtubeVideoId] = await Promise.all([
       fetchRecipeFromGemini(sanitized).catch((err) => {
         console.error('Gemini error:', err);
         throw new Error('Failed to generate recipe from Gemini');
@@ -64,11 +64,11 @@ export async function POST(request: NextRequest) {
       }),
       fetchYouTubeVideoId(sanitized).catch((err) => {
         console.error('YouTube error:', err);
-        return null; // Video is optional, don't hard fail
+        return null; 
       }),
     ]);
 
-    const newRecipe = await prisma.recipe.create({
+      const newRecipe = await prisma.recipe.create({
       data: {
         title: geminiData.title,
         imageUri,
